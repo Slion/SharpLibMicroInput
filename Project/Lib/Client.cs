@@ -33,9 +33,65 @@ namespace SharpLib.MicroInput
         {
             if (iDevice.IsOpen)
             {
-                byte[] garbage = new byte[] { 0x00, 0x00, 0x00, 0x00 };
+
+                byte[] garbage = new byte[]
+                {
+                    // Report ID
+                    0x00,
+                    // Device Type: Keyboard
+                    0x00,
+                    // Device Function: Print
+                    0x00,
+                    // Data size
+                    0x02,
+                    // Data, big endian
+                    // Unicode
+                    0x40,
+                    0x00
+                };
+
                 iDevice.Write(garbage);                
             }
+        }
+
+        // NOTE: Make sure KPayloadSize is an even number
+        // That makes sure our unicode characters do not get split between packets
+        const int KHeaderSize = 4;
+        const int KMaxPacketSize = 64;
+        const int KPayloadSize = KMaxPacketSize - KHeaderSize;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="aText"></param>
+        public void Print(string aText)
+        {
+            if (!iDevice.IsOpen)
+            {
+                return;
+            }
+            
+            // Get our text as byte
+            byte[] text = Encoding.Unicode.GetBytes(aText);
+            
+            int written = 0;
+
+            while (written!=text.Length)
+            {
+                int packetSize=Math.Min(text.Length + KHeaderSize, KMaxPacketSize);
+                int writeSize = Math.Min(text.Length-written, KMaxPacketSize-KHeaderSize);
+                byte[] data = new byte[packetSize];
+                data[0] = 0x00; // Report ID
+                data[1] = 0x00; // Device Type: Keyboard
+                data[2] = 0x00; // Function Type: Print
+                data[3] = (byte)writeSize; // Data size
+                Array.Copy(text, written, data, KHeaderSize, writeSize); // Copy our text
+                                                                     //
+                iDevice.Write(data);
+                written += writeSize;
+            }
+
         }
 
         /// <summary>

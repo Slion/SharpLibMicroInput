@@ -13,17 +13,30 @@ namespace MicroInputDemo
 {
     public partial class FormMain : Form
     {
+        MicroInput.Client iClient;
+
         public FormMain()
         {
             InitializeComponent();
+            iClient = new MicroInput.Client();
         }
 
         private void iButtonTest_Click(object sender, EventArgs e)
         {
-            MicroInput.Client microInput=new MicroInput.Client();
-            microInput.Open();
-            microInput.Test();
-            microInput.Close();
+            iTextBoxTest.Focus();
+
+            //iClient.Test();
+            iClient.Print(iTextBoxInput.Text);
+        }
+
+        private void iButtonOpen_Click(object sender, EventArgs e)
+        {
+            iClient.Open();
+        }
+
+        private void iButtonClose_Click(object sender, EventArgs e)
+        {
+            iClient.Close();
         }
     }
 }
