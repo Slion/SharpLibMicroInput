@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>SharpLibMicroInput</id>
+        <version>0.0.1</version>
+        <title>Actual user input generation through Teensy</title>
+        <authors>Stéphane Lenclud</authors>
+        <owners>Stéphane Lenclud</owners>
+        <licenseUrl>http://www.gnu.org/copyleft/gpl.html</licenseUrl>
+        <projectUrl>https://github.com/Slion/SharpLibMicroInput</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Class Library enabling actual user input generation via Arduino Teensy.</description>
+        <releaseNotes>First draft.</releaseNotes>
+        <copyright>Stéphane Lenclud</copyright>
+        <language />
+        <tags>HID Keyboard Input Mouse Joystick Teensy Arduino</tags>
+    </metadata>
+    <files>
+        <file src="..\Project\Release\x86\SharpLibMicroInput.dll" target="lib\net40\SharpLibMicroInput.dll" />
+    </files>
+</package>
