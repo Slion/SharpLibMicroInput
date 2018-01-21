@@ -28,30 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.iButtonTest = new System.Windows.Forms.Button();
-            this.iTextBoxTest = new System.Windows.Forms.TextBox();
+            this.iButtonPrint = new System.Windows.Forms.Button();
+            this.iTextBoxInput = new System.Windows.Forms.TextBox();
             this.iButtonOpen = new System.Windows.Forms.Button();
             this.iButtonClose = new System.Windows.Forms.Button();
-            this.iTextBoxInput = new System.Windows.Forms.TextBox();
+            this.iTextBoxOutput = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.iButtonAction = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // iButtonTest
+            // iButtonPrint
             // 
-            this.iButtonTest.Location = new System.Drawing.Point(12, 68);
-            this.iButtonTest.Name = "iButtonTest";
-            this.iButtonTest.Size = new System.Drawing.Size(75, 23);
-            this.iButtonTest.TabIndex = 0;
-            this.iButtonTest.Text = "Test";
-            this.iButtonTest.UseVisualStyleBackColor = true;
-            this.iButtonTest.Click += new System.EventHandler(this.iButtonTest_Click);
+            this.iButtonPrint.Location = new System.Drawing.Point(12, 174);
+            this.iButtonPrint.Name = "iButtonPrint";
+            this.iButtonPrint.Size = new System.Drawing.Size(75, 23);
+            this.iButtonPrint.TabIndex = 0;
+            this.iButtonPrint.Text = "Print";
+            this.iButtonPrint.UseVisualStyleBackColor = true;
+            this.iButtonPrint.Click += new System.EventHandler(this.iButtonPrint_Click);
             // 
-            // iTextBoxTest
+            // iTextBoxInput
             // 
-            this.iTextBoxTest.Location = new System.Drawing.Point(12, 260);
-            this.iTextBoxTest.Multiline = true;
-            this.iTextBoxTest.Name = "iTextBoxTest";
-            this.iTextBoxTest.Size = new System.Drawing.Size(376, 89);
-            this.iTextBoxTest.TabIndex = 1;
+            this.iTextBoxInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.iTextBoxInput.Location = new System.Drawing.Point(12, 242);
+            this.iTextBoxInput.Multiline = true;
+            this.iTextBoxInput.Name = "iTextBoxInput";
+            this.iTextBoxInput.Size = new System.Drawing.Size(449, 103);
+            this.iTextBoxInput.TabIndex = 1;
             // 
             // iButtonOpen
             // 
@@ -73,24 +78,58 @@
             this.iButtonClose.UseVisualStyleBackColor = true;
             this.iButtonClose.Click += new System.EventHandler(this.iButtonClose_Click);
             // 
-            // iTextBoxInput
+            // iTextBoxOutput
             // 
-            this.iTextBoxInput.Location = new System.Drawing.Point(12, 134);
-            this.iTextBoxInput.Multiline = true;
-            this.iTextBoxInput.Name = "iTextBoxInput";
-            this.iTextBoxInput.Size = new System.Drawing.Size(376, 89);
-            this.iTextBoxInput.TabIndex = 4;
+            this.iTextBoxOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.iTextBoxOutput.Location = new System.Drawing.Point(12, 79);
+            this.iTextBoxOutput.Multiline = true;
+            this.iTextBoxOutput.Name = "iTextBoxOutput";
+            this.iTextBoxOutput.Size = new System.Drawing.Size(449, 89);
+            this.iTextBoxOutput.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(21, 60);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(42, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Output:";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(21, 222);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Input:";
+            // 
+            // iButtonAction
+            // 
+            this.iButtonAction.Location = new System.Drawing.Point(291, 12);
+            this.iButtonAction.Name = "iButtonAction";
+            this.iButtonAction.Size = new System.Drawing.Size(75, 23);
+            this.iButtonAction.TabIndex = 7;
+            this.iButtonAction.Text = "Action";
+            this.iButtonAction.UseVisualStyleBackColor = true;
+            this.iButtonAction.Click += new System.EventHandler(this.iButtonAction_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 361);
-            this.Controls.Add(this.iTextBoxInput);
+            this.ClientSize = new System.Drawing.Size(473, 357);
+            this.Controls.Add(this.iButtonAction);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.iTextBoxOutput);
             this.Controls.Add(this.iButtonClose);
             this.Controls.Add(this.iButtonOpen);
-            this.Controls.Add(this.iTextBoxTest);
-            this.Controls.Add(this.iButtonTest);
+            this.Controls.Add(this.iTextBoxInput);
+            this.Controls.Add(this.iButtonPrint);
             this.Name = "FormMain";
             this.Text = "Micro Input Demo";
             this.ResumeLayout(false);
@@ -100,11 +139,14 @@
 
         #endregion
 
-        private System.Windows.Forms.Button iButtonTest;
-        private System.Windows.Forms.TextBox iTextBoxTest;
+        private System.Windows.Forms.Button iButtonPrint;
+        private System.Windows.Forms.TextBox iTextBoxInput;
         private System.Windows.Forms.Button iButtonOpen;
         private System.Windows.Forms.Button iButtonClose;
-        private System.Windows.Forms.TextBox iTextBoxInput;
+        private System.Windows.Forms.TextBox iTextBoxOutput;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button iButtonAction;
     }
 }
 

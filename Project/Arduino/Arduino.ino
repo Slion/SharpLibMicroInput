@@ -133,7 +133,8 @@ void loop()
 
 			if (header.iDeviceFunction == EDeviceFunctionPrint)
 			{
-				// Then our data
+				// Print function writes the given unicode string
+				// Fetch our data
 				uint16_t* ptr = (uint16_t*)(rawhidData + sizeof(PacketHeader));
 				int entryCount = header.iDataSize / sizeof(uint16_t);						
 				
@@ -150,15 +151,23 @@ void loop()
 
 					//Keyboard.press(ptr[i]);
 					//Keyboard.release(ptr[i]);
-				}
-				
+				}				
 			}
+			else if (header.iDeviceFunction == EDeviceFunctionAction)
+			{
+				// Then our data
+				uint16_t* ptr = (uint16_t*)(rawhidData + sizeof(PacketHeader));
+				int entryCount = header.iDataSize / sizeof(uint16_t);
 
-
-
-
-			//Keyboard.print("AZ!");
+				// Action all specified keys
+				for (int i = 0; i < entryCount; i++)
+				{
+					Keyboard.press(ptr[i]);
+					Keyboard.release(ptr[i]);
+				}
+			}
 		}
+		
 
 
 #ifdef SLOG

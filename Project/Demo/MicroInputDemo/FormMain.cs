@@ -15,18 +15,21 @@ namespace MicroInputDemo
     {
         MicroInput.Client iClient;
 
+       
+
         public FormMain()
         {
-            InitializeComponent();
+
+           InitializeComponent();
             iClient = new MicroInput.Client();
         }
 
-        private void iButtonTest_Click(object sender, EventArgs e)
+        private void iButtonPrint_Click(object sender, EventArgs e)
         {
-            iTextBoxTest.Focus();
-
-            //iClient.Test();
-            iClient.Print(iTextBoxInput.Text);
+            // Set focus to our input field
+            iTextBoxInput.Focus();
+            // Send output to our microcontroller
+            iClient.Print(iTextBoxOutput.Text);
         }
 
         private void iButtonOpen_Click(object sender, EventArgs e)
@@ -37,6 +40,16 @@ namespace MicroInputDemo
         private void iButtonClose_Click(object sender, EventArgs e)
         {
             iClient.Close();
+        }
+
+
+        private void iButtonAction_Click(object sender, EventArgs e)
+        {
+            // Set focus to our input field
+            iTextBoxInput.Focus();
+            iTextBoxInput.SelectAll();
+            // Send output to our microcontroller
+            iClient.KeyboardAction(MicroInput.Keyboard.KEY_A);
         }
     }
 }
