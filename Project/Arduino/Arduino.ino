@@ -155,15 +155,19 @@ void loop()
 			}
 			else if (header.iDeviceFunction == EDeviceFunctionAction)
 			{
-				// Then our data
+				// Fetch our data
 				uint16_t* ptr = (uint16_t*)(rawhidData + sizeof(PacketHeader));
 				int entryCount = header.iDataSize / sizeof(uint16_t);
 
-				// Action all specified keys
-				for (int i = 0; i < entryCount; i++)
+				// Must have 2 entries: modifier and key itself
+				if (entryCount == 2) 
 				{
-					Keyboard.press(ptr[i]);
-					Keyboard.release(ptr[i]);
+					// Apply modifier
+					Keyboard.set_modifier(ptr[0]);
+					// Action key
+					Keyboard.press(ptr[1]);
+					// Reset keys and modifiers
+					Keyboard.releaseAll();
 				}
 			}
 		}

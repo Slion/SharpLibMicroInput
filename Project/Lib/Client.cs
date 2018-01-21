@@ -29,7 +29,7 @@ namespace SharpLib.MicroInput
         /// <summary>
         /// 
         /// </summary>
-        public void KeyboardAction(ushort aKey)
+        public void KeyboardAction(ushort aKey, ushort aModifier=0)
         {
             if (iDevice.IsOpen)
             {
@@ -43,9 +43,11 @@ namespace SharpLib.MicroInput
                     // Device Function: Action
                     0x01,
                     // Data size
-                    0x02,
+                    0x04,
                     // Data, big endian
                     // Unicode
+                    (byte)aModifier,
+                    (byte)(aModifier>>8),
                     (byte)aKey,
                     (byte)(aKey>>8)
                 };

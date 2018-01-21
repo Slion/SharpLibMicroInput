@@ -7,7 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
+
 using MicroInput = SharpLib.MicroInput;
+
 
 namespace MicroInputDemo
 {
@@ -21,8 +24,43 @@ namespace MicroInputDemo
         {
 
            InitializeComponent();
-            iClient = new MicroInput.Client();
+           iClient = new MicroInput.Client();
+
+           PopulateKeyboardKeys();
+           PopulateKeyboardModifers();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void PopulateKeyboardKeys()
+        {
+            foreach (FieldInfo field in typeof(MicroInput.Keyboard.Key).GetFields())
+            {
+                if (field.IsPublic)
+                {
+                    iComboBoxKeyboardKeys.Items.Add(field.Name);
+                }                
+            }
+
+            // Set first item as current
+            iComboBoxKeyboardKeys.Text=iComboBoxKeyboardKeys.Items[0].ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void PopulateKeyboardModifers()
+        {
+            foreach (FieldInfo field in typeof(MicroInput.Keyboard.Modifier).GetFields())
+            {
+                if (field.IsPublic)
+                {
+                    iCheckedListBoxModifiers.Items.Add(field.Name);
+                }
+            }
+        }
+
 
         private void iButtonPrint_Click(object sender, EventArgs e)
         {
@@ -49,7 +87,17 @@ namespace MicroInputDemo
             iTextBoxInput.Focus();
             iTextBoxInput.SelectAll();
             // Send output to our microcontroller
-            iClient.KeyboardAction(MicroInput.Keyboard.KEY_A);
+
+            // Pack selected modifiers
+            ushort modifiers = 0;
+            foreach (string item in iCheckedListBoxModifiers.CheckedItems)
+            {
+                modifiers |= (ushort)typeof(MicroInput.Keyboard.Modifier).GetField(item).GetValue(null);
+            }
+
+            // Execute our keyboard action
+            iClient.KeyboardAction((ushort)typeof(MicroInput.Keyboard.Key).GetField(iComboBoxKeyboardKeys.Text).GetValue(null), modifiers);
         }
+
     }
 }
