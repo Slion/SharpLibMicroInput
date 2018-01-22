@@ -29,6 +29,17 @@ namespace SharpLib.MicroInput
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public bool IsOpen
+        {
+            get
+            {
+                return iDevice != null && iDevice.IsOpen;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         public void KeyboardAction(ushort aKey, ushort aModifier=0)
         {
             if (iDevice.IsOpen)

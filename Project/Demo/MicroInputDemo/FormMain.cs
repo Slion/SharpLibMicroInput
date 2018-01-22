@@ -18,16 +18,16 @@ namespace MicroInputDemo
     {
         MicroInput.Client iClient;
 
-       
-
         public FormMain()
         {
-
-           InitializeComponent();
-           iClient = new MicroInput.Client();
-
-           PopulateKeyboardKeys();
-           PopulateKeyboardModifers();
+            InitializeComponent();
+            iClient = new MicroInput.Client();
+            
+            // Populate keyboard keys and modifiers
+            PopulateKeyboardKeys();
+            PopulateKeyboardModifers();
+            // Update our UI
+            UpdateControls();
         }
 
         /// <summary>
@@ -40,11 +40,11 @@ namespace MicroInputDemo
                 if (field.IsPublic)
                 {
                     iComboBoxKeyboardKeys.Items.Add(field.Name);
-                }                
+                }
             }
 
             // Set first item as current
-            iComboBoxKeyboardKeys.Text=iComboBoxKeyboardKeys.Items[0].ToString();
+            iComboBoxKeyboardKeys.Text = iComboBoxKeyboardKeys.Items[0].ToString();
         }
 
         /// <summary>
@@ -61,6 +61,36 @@ namespace MicroInputDemo
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private void UpdateControls()
+        {
+            if (iClient.IsOpen)
+            {
+                iButtonOpen.Enabled = false;
+                //
+                iButtonClose.Enabled = true;
+                iButtonAction.Enabled = true;
+                iButtonPrint.Enabled = true;
+                iCheckedListBoxModifiers.Enabled = true;
+                iComboBoxKeyboardKeys.Enabled = true;
+                iTextBoxInput.Enabled = true;
+                iTextBoxOutput.Enabled = true;
+            }
+            else
+            {
+                iButtonOpen.Enabled = true;
+                //
+                iButtonClose.Enabled = false;
+                iButtonAction.Enabled = false;
+                iButtonPrint.Enabled = false;
+                iCheckedListBoxModifiers.Enabled = false;
+                iComboBoxKeyboardKeys.Enabled = false;
+                iTextBoxInput.Enabled = false;
+                iTextBoxOutput.Enabled = false;
+            }
+        }
 
         private void iButtonPrint_Click(object sender, EventArgs e)
         {
@@ -73,12 +103,16 @@ namespace MicroInputDemo
         private void iButtonOpen_Click(object sender, EventArgs e)
         {
             iClient.Open();
+            UpdateControls();
         }
 
         private void iButtonClose_Click(object sender, EventArgs e)
         {
             iClient.Close();
+            UpdateControls();
         }
+
+  
 
 
         private void iButtonAction_Click(object sender, EventArgs e)

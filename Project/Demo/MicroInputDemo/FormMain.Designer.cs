@@ -72,6 +72,7 @@
             // 
             // iButtonClose
             // 
+            this.iButtonClose.Enabled = false;
             this.iButtonClose.Location = new System.Drawing.Point(93, 12);
             this.iButtonClose.Name = "iButtonClose";
             this.iButtonClose.Size = new System.Drawing.Size(75, 23);
