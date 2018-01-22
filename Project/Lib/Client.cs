@@ -7,6 +7,10 @@ using HidLibrary;
 
 namespace SharpLib.MicroInput
 {
+    /// <summary>
+    /// Controls a micro input device.
+    /// Our micro input device is tipycally a Teeensy 3.2 board.
+    /// </summary>
     public class Client
     {
         private HidDevice iDevice;
@@ -37,34 +41,44 @@ namespace SharpLib.MicroInput
                 return iDevice != null && iDevice.IsOpen;
             }
         }
+
         /// <summary>
+        /// Request a key action from our device.
+        /// It should result in the corresponding key being pushed and released.
+        /// No keyboard layout translation is applied as key codes simply define hardware keys.
+        /// Therefore the end result of such an action very much depends of your actual keyboard layout and the application interpreting it.
+        /// Use the Print function if want a result that's independent of the keyboard layout.
         /// 
         /// </summary>
+        /// <param name="aKey">A key code constant from SharpLib.MicroInput.Keyboard.Key.</param>
+        /// <param name="aModifier">A key modifier combination from SharpLib.MicroInput.Keyboard.Modifier</param>
         public void KeyboardAction(ushort aKey, ushort aModifier=0)
         {
-            if (iDevice.IsOpen)
+            if (!iDevice.IsOpen)
             {
-
-                byte[] garbage = new byte[]
-                {
-                    // Report ID
-                    0x00,
-                    // Device Type: Keyboard
-                    0x00,
-                    // Device Function: Action
-                    0x01,
-                    // Data size
-                    0x04,
-                    // Data, big endian
-                    // Unicode
-                    (byte)aModifier,
-                    (byte)(aModifier>>8),
-                    (byte)aKey,
-                    (byte)(aKey>>8)
-                };
-
-                iDevice.Write(garbage);                
+                return;
             }
+
+            byte[] garbage = new byte[]
+            {
+                // Report ID
+                0x00,
+                // Device Type: Keyboard
+                0x00,
+                // Device Function: Action
+                0x01,
+                // Data size
+                0x04,
+                // Data, big endian
+                // Unicode
+                (byte)aModifier,
+                (byte)(aModifier>>8),
+                (byte)aKey,
+                (byte)(aKey>>8)
+            };
+
+            iDevice.Write(garbage);                
+            
         }
 
         // NOTE: Make sure KPayloadSize is an even number
