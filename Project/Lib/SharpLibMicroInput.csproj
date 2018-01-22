@@ -7,8 +7,8 @@
     <ProjectGuid>{94382107-6F94-4668-8B57-045A82469AF0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpLibMicroInput</RootNamespace>
-    <AssemblyName>SharpLib.MicroInput</AssemblyName>
+    <RootNamespace>SharpLib.MicroInput</RootNamespace>
+    <AssemblyName>SharpLibMicroInput</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

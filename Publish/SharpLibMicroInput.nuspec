@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>SharpLibMicroInput</id>
-        <version>0.0.1</version>
+        <version>0.0.2</version>
         <title>Actual user input generation through Teensy</title>
         <authors>Stéphane Lenclud</authors>
         <owners>Stéphane Lenclud</owners>
@@ -14,8 +14,13 @@
         <copyright>Stéphane Lenclud</copyright>
         <language />
         <tags>HID Keyboard Input Mouse Joystick Teensy Arduino</tags>
+        <dependencies>
+            <group targetFramework=".NETFramework4.6.1">
+                <dependency id="hidlibrary" version="3.2.46.0" />
+            </group>
+        </dependencies>
     </metadata>
     <files>
-        <file src="..\Project\Release\x86\SharpLibMicroInput.dll" target="lib\net40\SharpLibMicroInput.dll" />
+        <file src="..\Project\Lib\bin\Release\SharpLibMicroInput.dll" target="lib\net461\SharpLibMicroInput.dll" />
     </files>
 </package>
