@@ -59,7 +59,7 @@ namespace SharpLib.MicroInput
                 return;
             }
 
-            byte[] garbage = new byte[]
+            byte[] data = new byte[]
             {
                 // Report ID
                 0x00,
@@ -77,9 +77,91 @@ namespace SharpLib.MicroInput
                 (byte)(aKey>>8)
             };
 
-            iDevice.Write(garbage);                
+            iDevice.Write(data);                
             
         }
+
+
+        /// <summary>
+        /// Request a key press from our device.
+        /// It should result in the corresponding key being pushed.
+        /// No keyboard layout translation is applied as key codes simply define hardware keys.
+        /// Therefore the end result of such an action very much depends of your actual keyboard layout and the application interpreting it.
+        /// Use the Print function if want a result that's independent of the keyboard layout.
+        /// 
+        /// </summary>
+        /// <param name="aKey">A key code constant from SharpLib.MicroInput.Keyboard.Key.</param>
+        /// <param name="aModifier">A key modifier combination from SharpLib.MicroInput.Keyboard.Modifier</param>
+        public void KeyboardPress(ushort aKey, ushort aModifier = 0)
+        {
+            if (!iDevice.IsOpen)
+            {
+                return;
+            }
+
+            byte[] data = new byte[]
+            {
+                // Report ID
+                0x00,
+                // Device Type: Keyboard
+                0x00,
+                // Device Function: Press
+                0x02,
+                // Data size
+                0x04,
+                // Data, big endian
+                // Unicode
+                (byte)aModifier,
+                (byte)(aModifier>>8),
+                (byte)aKey,
+                (byte)(aKey>>8)
+            };
+
+            iDevice.Write(data);
+
+        }
+
+
+        /// <summary>
+        /// Request a key release from our device.
+        /// It should result in the corresponding key being released.
+        /// No keyboard layout translation is applied as key codes simply define hardware keys.
+        /// Therefore the end result of such an action very much depends of your actual keyboard layout and the application interpreting it.
+        /// Use the Print function if want a result that's independent of the keyboard layout.
+        /// 
+        /// </summary>
+        /// <param name="aKey">A key code constant from SharpLib.MicroInput.Keyboard.Key.</param>
+        /// <param name="aModifier">A key modifier combination from SharpLib.MicroInput.Keyboard.Modifier</param>
+        public void KeyboardRelease(ushort aKey, ushort aModifier = 0)
+        {
+            if (!iDevice.IsOpen)
+            {
+                return;
+            }
+
+            byte[] data = new byte[]
+            {
+                // Report ID
+                0x00,
+                // Device Type: Keyboard
+                0x00,
+                // Device Function: Release
+                0x03,
+                // Data size
+                0x04,
+                // Data, big endian
+                // Unicode
+                (byte)aModifier,
+                (byte)(aModifier>>8),
+                (byte)aKey,
+                (byte)(aKey>>8)
+            };
+
+            iDevice.Write(data);
+
+        }
+
+
 
         // NOTE: Make sure KPayloadSize is an even number
         // That makes sure our unicode characters do not get split between packets

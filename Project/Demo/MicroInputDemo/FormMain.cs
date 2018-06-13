@@ -133,5 +133,41 @@ namespace MicroInputDemo
             iClient.KeyboardAction((ushort)typeof(MicroInput.Keyboard.Key).GetField(iComboBoxKeyboardKeys.Text).GetValue(null), modifiers);
         }
 
+        private void iButtonRelease_Click(object sender, EventArgs e)
+        {
+            // Set focus to our input field
+            iTextBoxInput.Focus();
+            //iTextBoxInput.SelectAll();
+            // Send output to our microcontroller
+
+            // Pack selected modifiers
+            ushort modifiers = 0;
+            foreach (string item in iCheckedListBoxModifiers.CheckedItems)
+            {
+                modifiers |= (ushort)typeof(MicroInput.Keyboard.Modifier).GetField(item).GetValue(null);
+            }
+
+            // Execute our keyboard action
+            iClient.KeyboardRelease((ushort)typeof(MicroInput.Keyboard.Key).GetField(iComboBoxKeyboardKeys.Text).GetValue(null), modifiers);
+        }
+
+        private void iButtonPress_Click(object sender, EventArgs e)
+        {
+            // Set focus to our input field
+            iTextBoxInput.Focus();
+            iTextBoxInput.SelectAll();
+            // Send output to our microcontroller
+
+            // Pack selected modifiers
+            ushort modifiers = 0;
+            foreach (string item in iCheckedListBoxModifiers.CheckedItems)
+            {
+                modifiers |= (ushort)typeof(MicroInput.Keyboard.Modifier).GetField(item).GetValue(null);
+            }
+
+            // Execute our keyboard action
+            iClient.KeyboardPress((ushort)typeof(MicroInput.Keyboard.Key).GetField(iComboBoxKeyboardKeys.Text).GetValue(null), modifiers);
+
+        }
     }
 }

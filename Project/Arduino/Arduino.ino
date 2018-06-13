@@ -170,6 +170,37 @@ void loop()
 					Keyboard.releaseAll();
 				}
 			}
+			else if (header.iDeviceFunction == EDeviceFunctionPress)
+			{
+				// Fetch our data
+				uint16_t* ptr = (uint16_t*)(rawhidData + sizeof(PacketHeader));
+				int entryCount = header.iDataSize / sizeof(uint16_t);
+
+				// Must have 2 entries: modifier and key itself
+				if (entryCount == 2)
+				{
+					// Apply modifier
+					Keyboard.press(ptr[0]);
+					// Action key
+					Keyboard.press(ptr[1]);
+				}
+			}
+			else if (header.iDeviceFunction == EDeviceFunctionRelease)
+			{
+				// Fetch our data
+				uint16_t* ptr = (uint16_t*)(rawhidData + sizeof(PacketHeader));
+				int entryCount = header.iDataSize / sizeof(uint16_t);
+
+				// Must have 2 entries: modifier and key itself
+				if (entryCount == 2)
+				{
+					// Apply modifier
+					Keyboard.release(ptr[0]);
+					// Action key
+					Keyboard.release(ptr[1]);
+				}
+			}
+				
 		}
 		
 

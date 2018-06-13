@@ -38,6 +38,8 @@
             this.iButtonAction = new System.Windows.Forms.Button();
             this.iComboBoxKeyboardKeys = new System.Windows.Forms.ComboBox();
             this.iCheckedListBoxModifiers = new System.Windows.Forms.CheckedListBox();
+            this.iButtonPress = new System.Windows.Forms.Button();
+            this.iButtonRelease = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // iButtonPrint
@@ -137,11 +139,33 @@
             this.iCheckedListBoxModifiers.Size = new System.Drawing.Size(195, 199);
             this.iCheckedListBoxModifiers.TabIndex = 9;
             // 
+            // iButtonPress
+            // 
+            this.iButtonPress.Location = new System.Drawing.Point(224, 244);
+            this.iButtonPress.Name = "iButtonPress";
+            this.iButtonPress.Size = new System.Drawing.Size(75, 23);
+            this.iButtonPress.TabIndex = 10;
+            this.iButtonPress.Text = "Press";
+            this.iButtonPress.UseVisualStyleBackColor = true;
+            this.iButtonPress.Click += new System.EventHandler(this.iButtonPress_Click);
+            // 
+            // iButtonRelease
+            // 
+            this.iButtonRelease.Location = new System.Drawing.Point(305, 244);
+            this.iButtonRelease.Name = "iButtonRelease";
+            this.iButtonRelease.Size = new System.Drawing.Size(75, 23);
+            this.iButtonRelease.TabIndex = 11;
+            this.iButtonRelease.Text = "Release";
+            this.iButtonRelease.UseVisualStyleBackColor = true;
+            this.iButtonRelease.Click += new System.EventHandler(this.iButtonRelease_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(473, 586);
+            this.Controls.Add(this.iButtonRelease);
+            this.Controls.Add(this.iButtonPress);
             this.Controls.Add(this.iCheckedListBoxModifiers);
             this.Controls.Add(this.iComboBoxKeyboardKeys);
             this.Controls.Add(this.iButtonAction);
@@ -171,6 +195,8 @@
         private System.Windows.Forms.Button iButtonAction;
         private System.Windows.Forms.ComboBox iComboBoxKeyboardKeys;
         private System.Windows.Forms.CheckedListBox iCheckedListBoxModifiers;
+        private System.Windows.Forms.Button iButtonPress;
+        private System.Windows.Forms.Button iButtonRelease;
     }
 }
 

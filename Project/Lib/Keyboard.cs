@@ -4,7 +4,7 @@ namespace SharpLib.MicroInput.Keyboard
 {
     /// <summary>
     /// Contains constants representing HID keyboard scan codes as extracted from Teensydruino keylayouts.h
-    /// keylayouts.h contents was processed in notepad using the following regular expressions:
+    /// keylayouts.h contents was processed in notepad++ using the following regular expressions:
     ///    - Find: .*#define\s+(.+?)\s+(\(.+\))
     ///    - Replace: public const ushort \1 = \2;
     ///    
