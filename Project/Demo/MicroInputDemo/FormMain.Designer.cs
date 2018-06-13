@@ -178,6 +178,7 @@
             this.Controls.Add(this.iButtonPrint);
             this.Name = "FormMain";
             this.Text = "Micro Input Demo";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

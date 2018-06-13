@@ -19,7 +19,8 @@ enum TDeviceFunction
 	EDeviceFunctionPrint = 0,
 	EDeviceFunctionAction = 1,
 	EDeviceFunctionPress = 2,
-	EDeviceFunctionRelease = 3
+	EDeviceFunctionRelease = 3,
+	EDeviceFunctionReleaseAll = 4
 };
 
 
@@ -200,7 +201,11 @@ void loop()
 					Keyboard.release(ptr[1]);
 				}
 			}
-				
+			else if (header.iDeviceFunction == EDeviceFunctionReleaseAll)
+			{				
+				Keyboard.releaseAll();
+			}
+
 		}
 		
 

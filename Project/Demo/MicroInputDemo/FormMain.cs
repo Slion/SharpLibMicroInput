@@ -169,5 +169,10 @@ namespace MicroInputDemo
             iClient.KeyboardPress((ushort)typeof(MicroInput.Keyboard.Key).GetField(iComboBoxKeyboardKeys.Text).GetValue(null), modifiers);
 
         }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            iClient.Close();
+        }
     }
 }

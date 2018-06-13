@@ -162,6 +162,31 @@ namespace SharpLib.MicroInput
         }
 
 
+        /// <summary>
+        /// Release all keys on your keyboard.
+        /// </summary>
+        public void KeyboardReleaseAll()
+        {
+            if (!iDevice.IsOpen)
+            {
+                return;
+            }
+
+            byte[] data = new byte[]
+            {
+                // Report ID
+                0x00,
+                // Device Type: Keyboard
+                0x00,
+                // Device Function: Release All
+                0x04,
+                // Data size
+                0x00
+            };
+
+            iDevice.Write(data);
+
+        }
 
         // NOTE: Make sure KPayloadSize is an even number
         // That makes sure our unicode characters do not get split between packets
@@ -200,7 +225,7 @@ namespace SharpLib.MicroInput
                 iDevice.Write(data);
                 written += writeSize;
             }
-
+                
         }
 
         /// <summary>
@@ -208,6 +233,9 @@ namespace SharpLib.MicroInput
         /// </summary>
         public void Close()
         {
+            // Make sure no keys remain pushed
+            KeyboardReleaseAll(); //TODO: put that in dispose?
+            //
             iDevice.CloseDevice();
             iDevice.Dispose(); // Needed?
             iDevice = null;
