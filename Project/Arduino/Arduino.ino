@@ -164,11 +164,13 @@ void loop()
 				if (entryCount == 2) 
 				{
 					// Apply modifier
-					Keyboard.set_modifier(ptr[0]);
+					//Keyboard.set_modifier(ptr[0]);
+					Keyboard.press(ptr[0]);
 					// Action key
 					Keyboard.press(ptr[1]);
 					// Reset keys and modifiers
-					Keyboard.releaseAll();
+					Keyboard.release(ptr[1]);
+					Keyboard.release(ptr[0]);
 				}
 			}
 			else if (header.iDeviceFunction == EDeviceFunctionPress)
