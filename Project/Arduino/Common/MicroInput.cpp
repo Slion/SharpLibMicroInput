@@ -1,3 +1,8 @@
+
+#include "MicroInput.h"
+//#include <stdlib.h>
+//#include <stdint.h>
+
 /*
 Blink
 Turns on an LED on for one second, then off for one second, repeatedly.
@@ -5,11 +10,13 @@ Turns on an LED on for one second, then off for one second, repeatedly.
 This example code is in the public domain.
 */
 
-//#define SLOG
+//#if defined(SEREMU_INTERFACE) || defined(CDC_DATA_INTERFACE)
+#define SLOG
+//#endif
 
 enum TDeviceType
 {
-	EDeviceTypeKeyboard=0,
+	EDeviceTypeKeyboard = 0,
 	EDeviceTypeMouse = 1,
 	EDeviceTypeJoystick = 2
 };
@@ -23,13 +30,15 @@ enum TDeviceFunction
 	EDeviceFunctionReleaseAll = 4
 };
 
-
+#pragma pack(push,1)
 struct PacketHeader
 {
-	TDeviceType iDeviceType: 8;
+	TDeviceType iDeviceType : 8;
 	TDeviceFunction iDeviceFunction : 8;
-	uint8_t iDataSize: 8;
+	uint8_t iDataSize : 8;
 };
+#pragma pack(pop)
+
 
 // Buffer to hold RawHID data.
 // If host tries to send more data than this,
@@ -56,9 +65,20 @@ void Blink()
 	}
 }
 
+// Minimal blink
+void Heartbeat()
+{
+	// Also 
+	digitalWrite(led, HIGH);
+	delay(1);
+	digitalWrite(led, LOW);
+}
+
+
 //
 void LogBuffer(uint8_t* aPtr, int aSize)
 {
+#ifdef SLOG
 	for (int i = 0; i < aSize; i++)
 	{
 		Serial.print(aPtr[i]);
@@ -66,15 +86,28 @@ void LogBuffer(uint8_t* aPtr, int aSize)
 	}
 
 	Serial.println("");
+#endif
+}
+
+//
+void Log(const char* aString)
+{
+#ifdef SLOG 
+	// Log to serial port
+	Serial.println(aString);
+	// Also blink a tiny bit in case serial logs get lost
+	Heartbeat();
+#endif
 }
 
 
 
-// the setup routine runs once when you press reset:
-void setup() {
+
+void MicroInput::Setup()
+{
 	// initialize the digital pin as an output.
 	pinMode(led, OUTPUT);
-	
+
 	Blink();
 
 #ifdef SLOG
@@ -83,9 +116,7 @@ void setup() {
 #endif
 }
 
-
-// the loop routine runs over and over again forever:
-void loop()
+void MicroInput::Loop()
 {
 
 	/*
@@ -105,18 +136,28 @@ void loop()
 	//Keyboard.print("Hello World"); 
 
 	int n;
-	n = RawHID.recv(rawhidData, 0); // 0 timeout = do not wait
-    
-    // Valid packet must be larger than header
-	if (n > sizeof(PacketHeader)) 
+	//return;
+	n = RawHID.recv(rawhidData, 1000); // 0 timeout = do not wait
+
+#ifdef SLOG
+	//Serial.print("Packet size:");
+	//Serial.println(n);
+#endif
+
+	//Blink();
+	if (n == 0)
+	{
+		Log("RawHID read timeout");
+	}
+	// Valid packet must be larger than header
+	else if (n > sizeof(PacketHeader))
 	{
 		// First is our packet header
 		PacketHeader& header = *((PacketHeader*)rawhidData);
 
-#ifdef SLOG
-		Serial.print("Packet size:");
-		Serial.println(n);
+		//Blink();
 
+#ifdef SLOG
 		Serial.print("Device type:");
 		Serial.println(header.iDeviceType);
 
@@ -137,8 +178,8 @@ void loop()
 				// Print function writes the given unicode string
 				// Fetch our data
 				uint16_t* ptr = (uint16_t*)(rawhidData + sizeof(PacketHeader));
-				int entryCount = header.iDataSize / sizeof(uint16_t);						
-				
+				int entryCount = header.iDataSize / sizeof(uint16_t);
+
 				// Action all specified keys
 				for (int i = 0; i < entryCount; i++)
 				{
@@ -148,11 +189,12 @@ void loop()
 					Serial.println(ptr[i]);
 #endif
 
+#ifdef KEYBOARD_INTERFACE
 					Keyboard.write_unicode(ptr[i]);
-
+#endif
 					//Keyboard.press(ptr[i]);
 					//Keyboard.release(ptr[i]);
-				}				
+				}
 			}
 			else if (header.iDeviceFunction == EDeviceFunctionAction)
 			{
@@ -161,8 +203,9 @@ void loop()
 				int entryCount = header.iDataSize / sizeof(uint16_t);
 
 				// Must have 2 entries: modifier and key itself
-				if (entryCount == 2) 
+				if (entryCount == 2)
 				{
+#ifdef KEYBOARD_INTERFACE
 					// Apply modifier
 					//Keyboard.set_modifier(ptr[0]);
 					Keyboard.press(ptr[0]);
@@ -171,6 +214,7 @@ void loop()
 					// Reset keys and modifiers
 					Keyboard.release(ptr[1]);
 					Keyboard.release(ptr[0]);
+#endif
 				}
 			}
 			else if (header.iDeviceFunction == EDeviceFunctionPress)
@@ -182,10 +226,12 @@ void loop()
 				// Must have 2 entries: modifier and key itself
 				if (entryCount == 2)
 				{
+#ifdef KEYBOARD_INTERFACE
 					// Apply modifier
 					Keyboard.press(ptr[0]);
 					// Action key
 					Keyboard.press(ptr[1]);
+#endif
 				}
 			}
 			else if (header.iDeviceFunction == EDeviceFunctionRelease)
@@ -197,28 +243,33 @@ void loop()
 				// Must have 2 entries: modifier and key itself
 				if (entryCount == 2)
 				{
+#ifdef KEYBOARD_INTERFACE
 					// Apply modifier
 					Keyboard.release(ptr[0]);
 					// Action key
 					Keyboard.release(ptr[1]);
+#endif
 				}
 			}
 			else if (header.iDeviceFunction == EDeviceFunctionReleaseAll)
-			{				
+			{
+#ifdef KEYBOARD_INTERFACE
 				Keyboard.releaseAll();
+#endif
 			}
 
+
 		}
-		
+
 
 
 #ifdef SLOG
-		Serial.print("byteCount: ");
-		Serial.println(byteCount);
+		//Serial.print("byteCount: ");
+		//Serial.println(byteCount);
 #endif
 
-		
-		
+
+
 
 		//Joystick.button(10,true);
 
@@ -229,7 +280,7 @@ void loop()
 		//delay(3000);
 
 
-		/* 
+		/*
 		digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
 		delay(1000);               // wait for a second
 		digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW

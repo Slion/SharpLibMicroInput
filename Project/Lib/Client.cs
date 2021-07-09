@@ -9,25 +9,31 @@ namespace SharpLib.MicroInput
 {
     /// <summary>
     /// Controls a micro input device.
-    /// Our micro input device is tipycally a Teeensy 3.2 board.
+    /// Our micro input device is typically a Teeensy 3.2 board.
     /// </summary>
     public class Client
     {
         private HidDevice iDevice;
 
+        public const int KVendorIdPjrc = 0x16C0;
+        public const int KVendorIdSlions = 0x2808;
+        public const int KProductIdMicroInput = 0x0000;
+        public const int KProductIdTeensy32KeyboardMouseJoystick = 0x0482;
+        public const int KProductIdTeensy32RawHid = 0x0486;
+        public const int KProductIdTeensy32AllTheThings = 0x0476;
+        public const ushort RawUsagePage = 0xFFAB;
+
         /// <summary>
         /// 
         /// </summary>
-        public void Open()
+        public void Open(int aVendorId = KVendorIdSlions, int aProductId = KProductIdMicroInput, int aUsagePage = RawUsagePage)
         {
-            const int KVendorIdPjrc = 0x16C0;
-            const int KProductIdTeensy32KeyboardMouseJoystick = 0x0482;
-            const int KProductIdTeensy32RawHid = 0x0486;
-            const int KProductIdTeensy32AllTheThings = 0x0476;
-            const ushort RawUsagePage = 0xFFAB;
-            iDevice = HidDevices.Enumerate(KVendorIdPjrc, KProductIdTeensy32AllTheThings, RawUsagePage).FirstOrDefault();
-            iDevice.OpenDevice(DeviceMode.Overlapped, DeviceMode.Overlapped, ShareMode.ShareRead|ShareMode.ShareWrite);
-
+            //iDevice = HidDevices.Enumerate(KVendorIdPjrc, KProductIdTeensy32RawHid, RawUsagePage).FirstOrDefault();
+            iDevice = HidDevices.Enumerate(aVendorId, aProductId, aUsagePage).FirstOrDefault();
+            if (iDevice!=null)
+            {
+                iDevice.OpenDevice(DeviceMode.Overlapped, DeviceMode.Overlapped, ShareMode.ShareRead | ShareMode.ShareWrite);
+            }            
         }
 
         /// <summary>
@@ -167,7 +173,7 @@ namespace SharpLib.MicroInput
         /// </summary>
         public void KeyboardReleaseAll()
         {
-            if (!iDevice.IsOpen)
+            if (iDevice == null || !iDevice.IsOpen)
             {
                 return;
             }

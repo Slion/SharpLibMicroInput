@@ -40,6 +40,16 @@
             this.iCheckedListBoxModifiers = new System.Windows.Forms.CheckedListBox();
             this.iButtonPress = new System.Windows.Forms.Button();
             this.iButtonRelease = new System.Windows.Forms.Button();
+            this.numericVendorId = new System.Windows.Forms.NumericUpDown();
+            this.numericProductId = new System.Windows.Forms.NumericUpDown();
+            this.numericUsagePage = new System.Windows.Forms.NumericUpDown();
+            this.labelVendorId = new System.Windows.Forms.Label();
+            this.labelProductId = new System.Windows.Forms.Label();
+            this.labelUsagePage = new System.Windows.Forms.Label();
+            this.buttonUseTeensyDefaults = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.numericVendorId)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericProductId)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUsagePage)).BeginInit();
             this.SuspendLayout();
             // 
             // iButtonPrint
@@ -159,11 +169,107 @@
             this.iButtonRelease.UseVisualStyleBackColor = true;
             this.iButtonRelease.Click += new System.EventHandler(this.iButtonRelease_Click);
             // 
+            // numericVendorId
+            // 
+            this.numericVendorId.Hexadecimal = true;
+            this.numericVendorId.Location = new System.Drawing.Point(93, 89);
+            this.numericVendorId.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.numericVendorId.Name = "numericVendorId";
+            this.numericVendorId.Size = new System.Drawing.Size(75, 20);
+            this.numericVendorId.TabIndex = 12;
+            this.numericVendorId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericVendorId.Value = new decimal(new int[] {
+            10248,
+            0,
+            0,
+            0});
+            // 
+            // numericProductId
+            // 
+            this.numericProductId.Hexadecimal = true;
+            this.numericProductId.Location = new System.Drawing.Point(93, 115);
+            this.numericProductId.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.numericProductId.Name = "numericProductId";
+            this.numericProductId.Size = new System.Drawing.Size(75, 20);
+            this.numericProductId.TabIndex = 13;
+            this.numericProductId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // numericUsagePage
+            // 
+            this.numericUsagePage.Hexadecimal = true;
+            this.numericUsagePage.Location = new System.Drawing.Point(93, 141);
+            this.numericUsagePage.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.numericUsagePage.Name = "numericUsagePage";
+            this.numericUsagePage.Size = new System.Drawing.Size(75, 20);
+            this.numericUsagePage.TabIndex = 14;
+            this.numericUsagePage.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUsagePage.Value = new decimal(new int[] {
+            65451,
+            0,
+            0,
+            0});
+            // 
+            // labelVendorId
+            // 
+            this.labelVendorId.AutoSize = true;
+            this.labelVendorId.Location = new System.Drawing.Point(21, 91);
+            this.labelVendorId.Name = "labelVendorId";
+            this.labelVendorId.Size = new System.Drawing.Size(55, 13);
+            this.labelVendorId.TabIndex = 15;
+            this.labelVendorId.Text = "Vendor ID";
+            // 
+            // labelProductId
+            // 
+            this.labelProductId.AutoSize = true;
+            this.labelProductId.Location = new System.Drawing.Point(21, 117);
+            this.labelProductId.Name = "labelProductId";
+            this.labelProductId.Size = new System.Drawing.Size(58, 13);
+            this.labelProductId.TabIndex = 16;
+            this.labelProductId.Text = "Product ID";
+            // 
+            // labelUsagePage
+            // 
+            this.labelUsagePage.AutoSize = true;
+            this.labelUsagePage.Location = new System.Drawing.Point(21, 143);
+            this.labelUsagePage.Name = "labelUsagePage";
+            this.labelUsagePage.Size = new System.Drawing.Size(66, 13);
+            this.labelUsagePage.TabIndex = 17;
+            this.labelUsagePage.Text = "Usage Page";
+            // 
+            // buttonUseTeensyDefaults
+            // 
+            this.buttonUseTeensyDefaults.Location = new System.Drawing.Point(24, 60);
+            this.buttonUseTeensyDefaults.Name = "buttonUseTeensyDefaults";
+            this.buttonUseTeensyDefaults.Size = new System.Drawing.Size(144, 23);
+            this.buttonUseTeensyDefaults.TabIndex = 18;
+            this.buttonUseTeensyDefaults.Text = "Teensy Defaults";
+            this.buttonUseTeensyDefaults.UseVisualStyleBackColor = true;
+            this.buttonUseTeensyDefaults.Click += new System.EventHandler(this.buttonUseTeensyDefaults_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(473, 586);
+            this.Controls.Add(this.buttonUseTeensyDefaults);
+            this.Controls.Add(this.labelUsagePage);
+            this.Controls.Add(this.labelProductId);
+            this.Controls.Add(this.labelVendorId);
+            this.Controls.Add(this.numericUsagePage);
+            this.Controls.Add(this.numericProductId);
+            this.Controls.Add(this.numericVendorId);
             this.Controls.Add(this.iButtonRelease);
             this.Controls.Add(this.iButtonPress);
             this.Controls.Add(this.iCheckedListBoxModifiers);
@@ -179,6 +285,9 @@
             this.Name = "FormMain";
             this.Text = "Micro Input Demo";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
+            ((System.ComponentModel.ISupportInitialize)(this.numericVendorId)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericProductId)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUsagePage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -198,6 +307,13 @@
         private System.Windows.Forms.CheckedListBox iCheckedListBoxModifiers;
         private System.Windows.Forms.Button iButtonPress;
         private System.Windows.Forms.Button iButtonRelease;
+        private System.Windows.Forms.NumericUpDown numericVendorId;
+        private System.Windows.Forms.NumericUpDown numericProductId;
+        private System.Windows.Forms.NumericUpDown numericUsagePage;
+        private System.Windows.Forms.Label labelVendorId;
+        private System.Windows.Forms.Label labelProductId;
+        private System.Windows.Forms.Label labelUsagePage;
+        private System.Windows.Forms.Button buttonUseTeensyDefaults;
     }
 }
 

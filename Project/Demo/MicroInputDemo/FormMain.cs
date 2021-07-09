@@ -102,7 +102,10 @@ namespace MicroInputDemo
 
         private void iButtonOpen_Click(object sender, EventArgs e)
         {
-            iClient.Open();
+            iClient.Open(
+                Decimal.ToInt32(numericVendorId.Value),
+                Decimal.ToInt32(numericProductId.Value),
+                Decimal.ToInt32(numericUsagePage.Value));
             UpdateControls();
         }
 
@@ -111,9 +114,6 @@ namespace MicroInputDemo
             iClient.Close();
             UpdateControls();
         }
-
-  
-
 
         private void iButtonAction_Click(object sender, EventArgs e)
         {
@@ -173,6 +173,12 @@ namespace MicroInputDemo
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             iClient.Close();
+        }
+
+        private void buttonUseTeensyDefaults_Click(object sender, EventArgs e)
+        {
+            numericVendorId.Value = MicroInput.Client.KVendorIdPjrc;
+            numericProductId.Value = MicroInput.Client.KProductIdTeensy32AllTheThings;
         }
     }
 }
