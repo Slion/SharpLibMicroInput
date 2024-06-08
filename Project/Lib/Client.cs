@@ -242,8 +242,8 @@ namespace SharpLib.MicroInput
             // Make sure no keys remain pushed
             KeyboardReleaseAll(); //TODO: put that in dispose?
             //
-            iDevice.CloseDevice();
-            iDevice.Dispose(); // Needed?
+            iDevice?.CloseDevice();
+            iDevice?.Dispose(); // Needed?
             iDevice = null;
         }
     }

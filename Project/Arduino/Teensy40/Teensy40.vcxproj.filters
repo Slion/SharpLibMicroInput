@@ -20,6 +20,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Teensy40.ino" />
+    <ClCompile Include="Teensy40.ino" />
   </ItemGroup>
 </Project>
